@@ -1355,7 +1355,7 @@ int smithCard( struct gameState *state, int handPos) {
   int currentPlayer = whoseTurn(state);
   int i = 0;
   
-  for (i = 0; i < 2; i++) //bug: only draw 2 cards
+  for (i = 0; i < 3; i++) //bug: only draw 2 cards
 	{
 	  drawCard(currentPlayer, state);
 	}

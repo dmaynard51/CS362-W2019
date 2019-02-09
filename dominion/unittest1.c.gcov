@@ -1,0 +1,57 @@
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include <math.h>
+        -:    6:#include <stdlib.h>
+        -:    7:
+        -:    8:
+        -:    9:
+        -:   10:
+        -:   11:// runs the tests
+        1:   12:int main () {
+        -:   13:    
+        -:   14:    //create kingdom cards
+        1:   15:    int randomNumber = 1000;
+        1:   16:    int kingdomCards[10] = {adventurer, council_room, 
+        -:   17:    feast, gardens, mine, remodel, smithy, village, 
+        -:   18:    treasure_map, outpost};
+        1:   19:    int seed = 1500;
+        1:   20:    int playerNumber = 2;
+        -:   21:    struct gameState gstate;
+        -:   22:    int initGame;
+        1:   23:    initGame = initializeGame(playerNumber, kingdomCards, randomNumber,  &gstate);
+        -:   24:
+        1:   25:    printf("smithy : %i\n", smithy);
+        -:   26:    int handCount;
+        1:   27:    int bonus = 0;
+        -:   28:    
+        1:   29:    printf("Printing out the costs from 0-10 of each card");
+        -:   30:    int i;
+       11:   31:    for (i = 0; i < 10; i++)
+        -:   32:    {
+       10:   33:        printf("%i\n", getCost(i));
+        -:   34:    }
+        -:   35:    
+        -:   36:    //prints the what the cost is, and then the number of each card. 
+        -:   37:    //Should be in the same order as above.
+        1:   38:    printf("Curse should be 0 %i\n ",curse );
+        1:   39:    printf("Estate should be 2 %i\n",estate );
+        1:   40:    printf("Duchy should be 5 %i\n",duchy );
+        1:   41:    printf("Province should be 8 %i\n",province );
+        1:   42:    printf("Coppyer should be 0 %i\n",copper );
+        1:   43:    printf("Silver should be 3 %i\n",silver );
+        1:   44:    printf("Gold should be 6 %i\n",gold );
+        1:   45:    printf("Adventurer should be 6 %i\n",adventurer );
+        1:   46:    printf("Councilroom should be 5 %i\n",council_room );
+        1:   47:    printf("Feast should be 4 %i\n",feast );
+        -:   48:    
+        1:   49:    printf("PASS! Costs match up!\n");
+        1:   50:    return 0;
+        -:   51:    
+        -:   52:}
