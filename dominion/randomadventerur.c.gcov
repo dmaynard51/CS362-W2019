@@ -1,0 +1,148 @@
+        -:    0:Source:randomadventerur.c
+        -:    0:Graph:randomadventerur.gcno
+        -:    0:Data:randomadventerur.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include <math.h>
+        -:    6:#include <stdlib.h>
+        -:    7:#include <math.h>
+        -:    8:#include <time.h>
+        -:    9:#include <string.h>
+        -:   10://#include <assert.h>
+        -:   11:
+        -:   12:int shuffleCount = 0;
+        -:   13:int treasureCount = 0;
+        -:   14:int treasureArray[3] = {copper, silver, gold};
+        -:   15:int treasurefail = 0;
+        -:   16:
+        -:   17:
+      100:   18:void checkTreasure(int p1, struct gameState *gstate)
+        -:   19:{
+        -:   20:    //create gamestates
+        -:   21:    struct gameState previousGameState;
+      100:   22:    memcpy(&previousGameState, gstate, sizeof(struct gameState));
+        -:   23:    //memcpy(&pre,post,sizeof(struct gameState));
+        -:   24:    //variables for the treasure to compare
+      100:   25:    int oldTreasure = 0;
+      100:   26:    int verifyTreasure = 0;
+      100:   27:    int newTreasure = 0;
+        -:   28:    
+        -:   29:    int temphand[MAX_HAND];
+      100:   30:    int drawntreasure = 0;
+      100:   31:    int bonus = 0;
+      100:   32:    int drawnCard = 0;
+        -:   33:    
+        -:   34:    int i;
+      100:   35:    int temphandIter = 0;
+        -:   36:    int treasureCard;
+        -:   37:    
+        -:   38:    //use card
+      100:   39:    int useCard = 0;
+      100:   40:    useCard = cardEffect(adventurer,0,0,0,gstate,0,&bonus);
+        -:   41:    
+        -:   42:    //treasure on our own
+        -:   43:    
+      696:   44:    for (i = 0; i < gstate->handCount[p1]; i++) {
+      596:   45:        treasureCard = gstate->hand[p1][i];
+      596:   46:        if (treasureCard == copper || treasureCard == silver || treasureCard == gold) {
+      448:   47:            treasureCount = treasureCount + 1;
+        -:   48:        }
+        -:   49:    }
+        -:   50:    
+     3677:   51:    while (verifyTreasure < 2)
+        -:   52:    {
+        -:   53:        //draw card    
+     3477:   54:        drawnCard = drawCard(p1, &previousGameState);
+        -:   55:        //
+     3477:   56:        treasureCard = previousGameState.hand[p1][previousGameState.handCount[p1] - 1];
+     3477:   57:        if (treasureCard ==copper || treasureCard ==silver || treasureCard ==gold) {
+        -:   58:            //increment treasure
+      200:   59:            verifyTreasure++;
+        -:   60:           // previousGameState.handCount[p1]--;
+        -:   61:        }
+        -:   62:        else
+        -:   63:        {
+     3277:   64:            temphand[temphandIter] = drawnCard;
+     3277:   65:            previousGameState.handCount[p1]--;
+     3277:   66:            temphandIter++;
+        -:   67:        }
+        -:   68:    }
+        -:   69:    
+        -:   70:    
+        -:   71:   // printf("\n new treasure count is: %i\n", treasureCount);
+        -:   72:    /*previousGameState.hand[p1][0] = copper;
+        -:   73:    previousGameState.hand[p1][1] = copper;
+        -:   74:    previousGameState.hand[p1][2] = copper;
+        -:   75:    previousGameState.handCount[p1] += 2;*/
+        -:   76:
+        -:   77:    
+        -:   78:
+        -:   79:
+      299:   80:    for (i = 0; i < previousGameState.handCount[p1]; i++) {
+      199:   81:        treasureCard = previousGameState.hand[p1][i];
+      199:   82:        if (treasureCard == copper || treasureCard == silver || treasureCard == gold) {
+      199:   83:            oldTreasure = oldTreasure + 1;
+        -:   84:        }
+        -:   85:    }    
+        -:   86:    
+        -:   87:   // printf("treasure %i  actual treasure %i", oldTreasure, treasureCount);
+        -:   88:    
+        -:   89:    //printf("\n old treasure count is: %i\n", oldTreasure);
+        -:   90:    
+      100:   91:    if (oldTreasure != treasureCount)
+        -:   92:    {
+      100:   93:        treasurefail++;
+        -:   94:    }
+        -:   95:    
+        -:   96:    
+      100:   97:}
+        -:   98:
+        1:   99:int main () {
+        1:  100:    srand(time(NULL));
+        -:  101:    int i;
+        -:  102:    int playerNumber;
+        1:  103:    int testNumber = 100;
+        -:  104:    int n;
+      101:  105:    for (n = 0; n < testNumber; n++)
+        -:  106:    {
+      100:  107:    playerNumber = rand() % MAX_PLAYERS;
+      100:  108:    int treasureNumber = 0;
+        -:  109:    
+        -:  110:    
+        -:  111:    
+        -:  112:    struct gameState g1;
+        -:  113:    //set up deckcount
+      100:  114:    g1.deckCount[playerNumber] = rand() % MAX_HAND;
+        -:  115:    //set up treasure
+      100:  116:    treasureNumber = rand() % g1.deckCount[playerNumber];
+        -:  117:    //randomize the treasure type
+    12674:  118:    for (i = 0; i < treasureNumber; i++)
+        -:  119:    {
+    12574:  120:        g1.deck[playerNumber][i] = treasureArray[rand() % 3-1];
+        -:  121:    }
+        -:  122:    
+      100:  123:    g1.handCount[playerNumber] = 0;
+      100:  124:    g1.whoseTurn = playerNumber;
+      100:  125:    g1.discardCount[playerNumber] = 0;
+        -:  126:    
+        -:  127:    
+        -:  128:    
+        -:  129:    //set player count to max
+        -:  130:    
+        -:  131:    
+        -:  132:    
+        -:  133:    //int playerCount = MAX_PLAYERS;
+        -:  134:    
+        -:  135:    
+        -:  136:    
+        -:  137:    //call the function
+      100:  138:    checkTreasure(playerNumber, &g1);
+        -:  139:    }
+        1:  140:    printf("Total fails out of %i is: %i", testNumber, treasurefail);
+        -:  141:    
+        1:  142:    return 0;
+        -:  143:}

@@ -1,0 +1,118 @@
+        -:    0:Source:randomcard1.c
+        -:    0:Graph:randomcard1.gcno
+        -:    0:Data:randomcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include <math.h>
+        -:    6:#include <stdlib.h>
+        -:    7:#include <math.h>
+        -:    8:#include <time.h>
+        -:    9:#include <string.h>
+        -:   10://#include <assert.h>
+        -:   11:
+        -:   12:int shuffleCount = 0;
+        -:   13:int treasureCount = 0;
+        -:   14:int treasureArray[3] = {copper, silver, gold};
+        -:   15:int countIncreaseFail = 0;
+        -:   16:
+        -:   17:
+       50:   18:void checkTreasure(int p1, struct gameState *gstate)
+        -:   19:{
+        -:   20:    //create gamestates
+        -:   21:    struct gameState previousGameState;
+       50:   22:    memcpy(&previousGameState, gstate, sizeof(struct gameState));
+        -:   23:    //memcpy(&pre,post,sizeof(struct gameState));
+        -:   24:    //variables for the treasure to compare
+       50:   25:    int oldTreasure = 0;
+       50:   26:    int newTreasure = 0;
+        -:   27:    
+        -:   28:    int temphand[MAX_HAND];
+       50:   29:    int drawntreasure = 0;
+       50:   30:    int bonus = 0;
+        -:   31:    
+        -:   32:    int i;
+        -:   33:    int treasureCard;
+        -:   34:    
+        -:   35:    //use card
+       50:   36:    int useCard = 0;
+       50:   37:    useCard = cardEffect(smithy,0,0,0,gstate,0,&bonus);
+        -:   38:    
+        -:   39:    
+        -:   40:    
+        -:   41:    
+        -:   42:   // printf("\n new treasure count is: %i\n", treasureCount);
+        -:   43:    
+       50:   44:    int newDrawCount = gstate->handCount[p1];
+        -:   45:    
+       50:   46:    int oldDrawCount = previousGameState.handCount[p1] + 3; 
+        -:   47:    
+        -:   48:    
+       50:   49:    printf("\n old draw count is: %i\n", oldDrawCount);
+       50:   50:    printf("\n new draw count is: %i\n", newDrawCount);
+        -:   51:   
+        -:   52:    
+       50:   53:    if (newDrawCount != oldDrawCount)
+        -:   54:    {
+    #####:   55:        countIncreaseFail++;
+        -:   56:    }
+       50:   57:}
+        -:   58:
+        1:   59:int main () {
+        1:   60:    srand(time(NULL));
+        -:   61:    int i;
+        -:   62:    
+        -:   63:    int playerNumber;
+        1:   64:    int testNumber = 50;
+        -:   65:    
+        -:   66:    
+        -:   67:    int n;
+        -:   68:    
+       51:   69:    for (n = 0; n < testNumber; n++)
+        -:   70:    {
+        -:   71:        
+        -:   72:    //randomize playerNumber
+       50:   73:    playerNumber = rand() % MAX_PLAYERS-1;
+       50:   74:    int treasureNumber = 0;
+        -:   75:    
+        -:   76:    
+        -:   77:    
+        -:   78:    struct gameState g1;
+        -:   79:    //set up deckcount
+        -:   80:    //set the deck count of this player
+       50:   81:    g1.deckCount[playerNumber] = rand() % MAX_HAND;
+        -:   82:    //set up treasure
+       50:   83:    treasureNumber = rand() % g1.deckCount[playerNumber];
+        -:   84:    //randomize the treasure type
+     6189:   85:    for (i = 0; i < treasureNumber; i++)
+        -:   86:    {
+     6139:   87:        g1.deck[playerNumber][i] = treasureArray[rand() % treasureNumber];
+        -:   88:    }
+        -:   89:    
+       50:   90:    g1.handCount[playerNumber] = 0;
+       50:   91:    g1.whoseTurn = playerNumber;
+       50:   92:    g1.discardCount[playerNumber] = 0;
+        -:   93:    
+        -:   94:    
+        -:   95:    
+        -:   96:    //set player count to max
+        -:   97:    
+        -:   98:    
+        -:   99:    
+        -:  100:    //int playerCount = MAX_PLAYERS;
+        -:  101:    
+        -:  102:    
+        -:  103:    
+        -:  104:    //call the function
+       50:  105:    checkTreasure(playerNumber, &g1);
+        -:  106:    }
+        -:  107:    
+        -:  108:    
+        1:  109:    if (countIncreaseFail > 0){
+    #####:  110:    printf("Total fails: %i\n", countIncreaseFail);
+        -:  111:    }
+        1:  112:    return 0;
+        -:  113:}

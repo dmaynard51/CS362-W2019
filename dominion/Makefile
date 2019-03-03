@@ -65,6 +65,21 @@ unittestresults: unittest1.c unittest2.c unittest3.c cardtest1.c cardtest2.c car
 	gcov cardtest4.c >> unittestresults.out		
 	
 
+randomadventerur: randomadventerur.c dominion.c rngs.c 
+	gcc -o randomadventerur randomadventerur.c dominion.c rngs.c $(CFLAGS)
+	./randomadventerur > randomadventerur.out
+	gcov randomadventerur.c >> randomadventerur.out
+	
+randomcard1: randomcard1.c dominion.c rngs.c 
+	gcc -o randomcard1 randomcard1.c dominion.c rngs.c $(CFLAGS)
+	./randomcard1 > randomcard1.out
+	gcov randomcard1.c >> randomcard1.out
+	
+randomcard2: randomcard2.c dominion.c rngs.c 
+	gcc -o randomcard2 randomcard2.c dominion.c rngs.c $(CFLAGS)	
+	./randomcard2 > randomcard2.out
+	gcov randomcard2.c >> randomcard2.out	
+
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
